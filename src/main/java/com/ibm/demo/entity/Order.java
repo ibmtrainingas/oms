@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 public class Order {
 	@NotNull
 	private String item;
+	@NotNull
 	private float price;
 
 	public float getPrice() {
