@@ -1,14 +1,20 @@
 package com.ibm.demo.entity;
 
+import javax.validation.constraints.NotNull;
+
 public class Order {
-	 private String item;
-	 private float price;
+	@NotNull
+	private String item;
+	private float price;
 
 	public float getPrice() {
 		return price;
 	}
 
 	public void setPrice(float price) {
+		if (price <= 0) {
+			throw new IllegalArgumentException("Price cannot be negative ");
+		}
 		this.price = price;
 	}
 

@@ -1,6 +1,9 @@
 package com.ibm.demo;
 
-import org.springframework.http.HttpRequest;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,14 +13,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm.demo.entity.Order;
+import com.ibm.demo.service.OrderService;
 
 @RestController
-public class OrderController {
+public class OrderController { //Frontend
+
+	@Autowired // is used for Dependency Injection
+	OrderService orderService; //Dependency Injection
 
 	@PostMapping("/order")
-	String createOrder(@RequestBody Order order) {
+	String createOrder(@RequestBody @Valid Order order, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			throw new IllegalArgumentException("Something went wrong, Please retry !!");
+		}
 		System.out.println(order);
-		return "Success";
+		return orderService.createOrder(order);
 	}
 
 	@GetMapping("/order")
@@ -33,7 +43,7 @@ public class OrderController {
 
 	@DeleteMapping("/order/{id}")
 	String deleteOrder(@PathVariable("id") int orderId) {
-		//System.out.println(httpRequest.getHeaders());
+		// System.out.println(httpRequest.getHeaders());
 		System.out.println(orderId);
 		return "order deleted";
 	}
