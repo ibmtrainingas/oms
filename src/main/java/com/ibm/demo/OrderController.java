@@ -29,9 +29,7 @@ public class OrderController { // Fronted
 	@PostMapping("/order")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	String createOrder(@RequestBody @Valid Order order, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			throw new IllegalArgumentException("Something went wrong, Please retry !!");
-		}
+		validateModel(bindingResult);
 		System.out.println(order);
 		return orderService.createOrder(order); // Delegation of object to Service Class
 	}
@@ -42,6 +40,7 @@ public class OrderController { // Fronted
 		return orderService.getOrder(orderId);
 	}
 
+	
 	private void validateModel(Errors bindingResult) {
 		if (bindingResult.hasErrors()) {
 			throw new IllegalArgumentException("Something went wrong, Please retry !!");
