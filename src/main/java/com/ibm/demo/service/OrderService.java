@@ -28,8 +28,8 @@ public class OrderService { // Spring Beans
 		orderRepository.save(order);
 	}
 
-	public void deleteOrder(int orderId) {
-		System.out.println("order deleted");
+	public void deleteOrder(String orderId) {
+		orderRepository.deleteById(orderId);;
 	}
 
 	public Optional<Order> getOrder(String orderId) {

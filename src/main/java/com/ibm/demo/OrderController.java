@@ -64,14 +64,12 @@ public class OrderController { // Fronted
 	@PutMapping("/order/{id}")
 	void updateOrder(@RequestBody @Valid Order order, BindingResult bindingResult, @PathVariable("id") String orderId) {
 		validateModel(bindingResult);
-		System.out.println(orderId);
 		order.setId(orderId);
 		orderService.updateOrder(order);
 	}
 
 	@DeleteMapping("/order/{id}")
-	void deleteOrder(@PathVariable("id") int orderId) {
-		System.out.println(orderId);
+	void deleteOrder(@PathVariable("id") String orderId) {
 		orderService.deleteOrder(orderId);
 	}
 
